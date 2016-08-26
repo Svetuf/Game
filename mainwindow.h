@@ -37,6 +37,7 @@ private:
     QWidget* settingsWidget;
     vector<QPushButton*>buttons;
     void createGame();
+    bool act;
 
 public slots:
     void startGameButtonPressed();

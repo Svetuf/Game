@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     this->setFixedSize(540,420);
     //this->setFixedSize(mySize);
+    act = false;
     createMenu();
 }
 
@@ -43,6 +44,7 @@ void MainWindow::createMenu()
     connect(buttons[0], SIGNAL(pressed()), this, SLOT(startGameButtonPressed()));
     connect(buttons[1], SIGNAL(pressed()), this, SLOT(settings()));
     setCentralWidget(wi);
+    return;
 }
 
 void MainWindow::createGame()
@@ -60,7 +62,7 @@ void MainWindow::createGame()
     Ball* testBall = new Ball(scene);
     scene->addItem(testBall);
     testBall->setPos(this->width() / 2, this->height() / 2);
-    connect(scene, &MyScene::escPressed, this, &MainWindow::gameExit); //не работает сцена отправляет а не принимает
+    connect(scene, &MyScene::escPressed, this, &MainWindow::gameExit);
     connect(testBall, &Ball::imDead, this, &MainWindow::gameOver);
     //add tiles
     for(int j = 0; j < 5; j++)
@@ -121,10 +123,17 @@ void MainWindow::settingsEnd()
 
 void MainWindow::gameExit()
 {
+
+//    view = NULL;
+//    scene = NULL;
+    if(act)
+        return;
+    wi = NULL;
     view->deleteLater();
     scene->deleteLater();
-    wi = NULL;
     createMenu();
+    act = true;
+    return;
 }
 
 void MainWindow::gameOver()
