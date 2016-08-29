@@ -50,6 +50,7 @@ void MainWindow::createMenu()
 void MainWindow::createGame()
 {
     buttons.clear();
+    act = false;
     // all about scene
     scene = new MyScene(this);
     scene->setSceneRect(0,0, this->width() - 20, this->height() - 20);
@@ -126,14 +127,25 @@ void MainWindow::gameExit()
 
 //    view = NULL;
 //    scene = NULL;
-    if(act)
-        return;
+    if(act){}
+        //return;
+    qDebug() << "triggeredVasheBefore";
     wi = NULL;
-    view->deleteLater();
-    scene->deleteLater();
+    view = NULL;
+    scene = NULL;
+    qDebug() << "triggeredBefore";
     createMenu();
+    qDebug() << "triggeredAfter";
     act = true;
     return;
+}
+
+void MainWindow::testFunction()
+{
+    qDebug() << "triggered";
+    disconnect(timer, &QTimer::timeout, this, &MainWindow::gameExit);
+    disconnect(timer, &QTimer::timeout, this, &MainWindow::testFunction);
+    timer = NULL;
 }
 
 void MainWindow::gameOver()
@@ -143,7 +155,8 @@ void MainWindow::gameOver()
     GraphicsItemDrawImage* i = new GraphicsItemDrawImage(words);
     scene->addItem(i);
     i->setPos(scene->width() / 2, scene->height() / 2);
-    QTimer *timer = new QTimer;
+    timer = new QTimer(this);
     timer->start(2000);
     connect(timer, &QTimer::timeout, this, &MainWindow::gameExit);
+    connect(timer, &QTimer::timeout, this, &MainWindow::testFunction);
 }

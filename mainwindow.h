@@ -35,6 +35,7 @@ private:
     MyScene* scene;
     QWidget* wi;
     QWidget* settingsWidget;
+    QTimer *timer;
     vector<QPushButton*>buttons;
     void createGame();
     bool act;
@@ -46,6 +47,7 @@ public slots:
     void settingsEnd();
     void gameExit();
     void gameOver();
+    void testFunction();
 };
 
 #endif // MAINWINDOW_H
