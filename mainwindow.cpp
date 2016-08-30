@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setFixedSize(540,420);
     //this->setFixedSize(mySize);
     act = false;
+    // snoop
+
+
+    //
     createMenu();
 }
 
@@ -28,7 +32,15 @@ void MainWindow::createMenu()
     scene1->setBackgroundBrush(planet);
     MyView* view1 = new MyView(scene1,wi);
     //setCentralWidget(view1);
+    QMovie*   movie = new QMovie("/opt/qtdisk/newGame/snoop.gif");
+    QLabel* processLabel = new QLabel();
+    movie->setScaledSize(QSize(250,121));
+    processLabel->setMovie(movie);
+    processLabel->setGeometry(this->width() - 250, this->height()  - 121 ,250,121);
+    movie->start();
+    scene1->addWidget(processLabel);
     view1->show();
+
 
     int h = 40, w = 80;
     for(int i = 0; i < 4; i++)
@@ -143,6 +155,7 @@ void MainWindow::gameExit()
 void MainWindow::testFunction()
 {
     qDebug() << "triggered";
+    // осторожно костыли !!!
     disconnect(timer, &QTimer::timeout, this, &MainWindow::gameExit);
     disconnect(timer, &QTimer::timeout, this, &MainWindow::testFunction);
     timer = NULL;

@@ -10,6 +10,8 @@
 #include <QGraphicsView>
 #include <vector>
 #include <QTimer>
+#include <QMovie>
+#include <QLabel>
 #include "platform.h"
 #include "myscene.h"
 #include "myview.h"
